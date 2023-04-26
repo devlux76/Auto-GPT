@@ -1,0 +1,41 @@
+name: Sync Upstream Changes
+
+on:
+  schedule:
+    # Run the workflow once a day at 00:00 UTC
+    - cron: '0 0 * * *'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check out the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      # Configure Git user
+      - name: Configure Git User
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+
+      # Add the upstream repository
+      - name: Add Upstream Repository
+        run: |
+          git remote add upstream https://github.com/Significant-Gravitas/Auto-GPT.git
+
+      # Fetch changes from the upstream repository
+      - name: Fetch Upstream Changes
+        run: |
+          git fetch upstream
+
+      # Merge changes from the upstream repository into the main branch
+      - name: Merge Upstream Changes
+        run: |
+          git merge upstream/main
+
+      # Push the changes back to the main branch of the repository
+      - name: Push Changes
+        run: |
+          git push origin HEAD:main
