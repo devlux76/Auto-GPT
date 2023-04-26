@@ -2,8 +2,8 @@ name: Sync Upstream Changes
 
 on:
   schedule:
-    # Run the workflow once a day at 00:00 UTC
-    - cron: '0 0 * * *'
+    # Run the workflow at the start of every hour
+    - cron: '0 * * * *'
 
 jobs:
   sync:
